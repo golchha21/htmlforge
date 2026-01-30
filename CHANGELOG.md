@@ -7,6 +7,13 @@ This project adheres to **Semantic Versioning**.
 
 ---
 
+## [1.0.3] - 2026-01-30
+
+### Fixed
+- Add roadmap
+
+---
+
 ## [1.0.2] - 2026-01-30
 
 ### Fixed
