@@ -7,7 +7,14 @@ This project adheres to **Semantic Versioning**.
 
 ---
 
-## [1.0.0] – Initial Stable Release
+## [1.0.1] - 2026-01-30
+
+### Fixed
+- Renamed `REAMME.md` to `README.md`
+
+---
+
+## [1.0.0] – Initial Stable Release - 2026-01-30
 
 This is the first public, stable release of HTMLForge.
 
