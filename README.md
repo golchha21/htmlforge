@@ -1,11 +1,11 @@
 # HTMLForge
 
-![PHP](https://img.shields.io/badge/PHP-8.3%2B-777bb4?logo=php&logoColor=white)
-![Downloads](https://img.shields.io/packagist/dt/htmlforge/htmlforge)
-![Version](https://img.shields.io/badge/version-v1.0.0-blue)
-![License](https://img.shields.io/badge/license-MIT-green)
-![WCAG](https://img.shields.io/badge/accessibility-WCAG%202.x-success)
-![HTML](https://img.shields.io/badge/HTML-W3C%20Compliant-orange)
+![PHP](https://img.shields.io/packagist/php-v/golchha21/htmlforge?logo=php&logoColor=white&color=777bb4)
+[![Version](https://img.shields.io/packagist/v/golchha21/htmlforge)](https://packagist.org/packages/golchha21/htmlforge)
+[![Downloads](https://img.shields.io/packagist/dt/golchha21/htmlforge)](https://packagist.org/packages/golchha21/htmlforge)
+[![License](https://img.shields.io/packagist/l/golchha21/htmlforge)](https://packagist.org/packages/golchha21/htmlforge)
+![Accessibility](https://img.shields.io/badge/Accessibility-WCAG%202.x-success)
+![Standards](https://img.shields.io/badge/HTML-W3C%20Compliant-orange)
 
 **HTMLForge** is a standards-first HTML compiler for PHP.
 

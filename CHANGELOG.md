@@ -7,6 +7,13 @@ This project adheres to **Semantic Versioning**.
 
 ---
 
+## [1.0.2] - 2026-01-30
+
+### Fixed
+- Updated the badges on `README.md`
+
+---
+
 ## [1.0.1] - 2026-01-30
 
 ### Fixed
