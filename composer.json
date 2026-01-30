@@ -1,0 +1,49 @@
+{
+    "name": "golchha21/htmlforge",
+    "description": "A standards-first HTML compiler for PHP that generates W3C-compliant, accessibility-validated HTML by construction.",
+    "type": "library",
+    "license": "MIT",
+    "keywords": [
+        "html",
+        "accessibility",
+        "a11y",
+        "wcag",
+        "w3c",
+        "standards",
+        "html5",
+        "compiler",
+        "validation",
+        "php"
+    ],
+    "authors": [
+        {
+            "name": "Ulhas Vardhan Golchha",
+            "email": "vardhans@ulhas.net",
+            "homepage": "https://www.ulhas.net",
+            "role": "Web Architect"
+        }
+    ],
+    "homepage": "https://github.com/golchha21/htmlforge",
+    "support": {
+        "issues": "https://github.com/golchha21/htmlforge/issues",
+        "source": "https://github.com/golchha21/htmlforge"
+    },
+    "require": {
+        "php": "^8.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "HTMLForge\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "HTMLForge\\Tests\\": "tests/"
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^12.5"
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
