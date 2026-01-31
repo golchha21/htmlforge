@@ -14,7 +14,7 @@ It strengthens correctness.
 
 ## Current Status
 
-- **Latest stable:** v1.1.1
+- **Latest stable:** v1.1.2
 - **API stability:** v1.x frozen
 - **Maintenance:** v1.1.x (docs/metadata only)
 

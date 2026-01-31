@@ -7,6 +7,27 @@ This project adheres to **Semantic Versioning**.
 
 ---
 
+## [1.1.2] - 2026-01-31
+
+### Added
+- Complete PHP-backed documentation examples covering:
+  - Full document rendering
+  - Fragment rendering
+  - Accessibility validation
+  - CMS-safe validation pipelines
+
+### Changed
+- Consolidated and expanded project documentation
+- Updated README.md with structured documentation index
+- Clarified contribution and release policies
+- Updated roadmap to reflect current direction
+
+### Status
+- Documentation and examples stabilized
+- No changes to engine behavior, validation semantics, or public APIs
+
+---
+
 ## [1.1.1] - 2026-01-31
 
 ### Fixed

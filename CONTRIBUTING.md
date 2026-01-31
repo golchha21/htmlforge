@@ -30,6 +30,32 @@ HTMLForge is a correctness-first project.
 
 ---
 
+## Release Policy
+
+HTMLForge follows a strict, low-noise release discipline.
+
+### Versioning
+- The project follows **Semantic Versioning**
+- Every release is **git-tagged**
+- Tags are immutable once published
+
+### GitHub Releases
+- **Patch releases (`x.y.z`)**
+  - Published as git tags only
+  - No GitHub Release page
+  - Used for documentation, tests, and non-semantic cleanup
+
+- **Minor and major releases (`x.y.0`, `x.0.0`)**
+  - Published as git tags and GitHub Releases
+  - Used when behavior, guarantees, or capabilities change
+
+### Immutability
+- Past changelog entries are never edited after release
+- Releases are append-only
+- Tags are never moved or reused
+
+---
+
 ## Philosophy
 
 HTMLForge treats HTML as a **language**, not a suggestion.

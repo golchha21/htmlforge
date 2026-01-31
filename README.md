@@ -133,6 +133,41 @@ One violation always corresponds to **one semantic rule failure**.
 
 ---
 
+## Documentation
+
+The documentation is intentionally small, focused, and correctness-oriented.
+
+If something is not documented, it is either unstable or out of scope.
+
+### Getting started
+- **[Overview](docs/overview.md)**  
+  What HTMLForge is, what it is not, and when to use it.
+
+- **[Core Concepts](docs/core-concepts.md)**  
+  ASTs, validation vs rendering, determinism, and design decisions.
+
+### Validation
+- **[Validation Profiles](docs/validation-profiles.md)**  
+  Available profiles and how to choose the right one.
+
+- **[ValidationReport](docs/validation-report.md)**  
+  Canonical schema, rule IDs, element paths, and report rendering.
+
+### Examples
+- **[Basic Document](docs/examples/basic-document.md)**  
+  Rendering and validating a complete HTML document.
+
+- **[Fragment Rendering](docs/examples/fragment-rendering.md)**  
+  Rendering partial HTML without document-level assumptions.
+
+- **[Accessibility Validation](docs/examples/accessibility-validation.md)**  
+  WCAG-aware validation with rule IDs and element paths.
+
+- **[CMS-Safe Pipeline](docs/examples/cms-safe-pipeline.md)**  
+  Validating and rendering untrusted, user-generated content.
+
+---
+
 ## Appendix: Element Coverage Matrix
 
 This usage example exercises the following HTML element categories:
