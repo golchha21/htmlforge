@@ -14,9 +14,9 @@ It strengthens correctness.
 
 ## Current Status
 
-- **Latest stable:** v1.0.2
-- **Stability:** Frozen core
-- **Maintenance mode:** v1.0.x (docs and metadata only)
+- **Latest stable:** v1.1.0
+- **API stability:** v1.x frozen
+- **Maintenance:** v1.1.x (docs/metadata only)
 
 ---
 

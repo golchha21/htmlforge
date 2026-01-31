@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace HTMLForge;
 
 use HTMLForge\Config\HTMLForgeConfig;
-use HTMLForge\Validation\ValidationMode;
-use HTMLForge\Validation\ValidationProfile;
+use HTMLForge\Validation\Profiles\ValidationMode;
+use HTMLForge\Validation\Profiles\ValidationProfile;
 
 final class HTMLForge
 {

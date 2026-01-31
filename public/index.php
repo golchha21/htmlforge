@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 require __DIR__ . '/../vendor/autoload.php';
 
-use HTMLForge\Builder\HtmlBuilder;
-use HTMLForge\Builder\Elements;
 use HTMLForge\Builder\DocumentBuilder;
+use HTMLForge\Builder\Elements;
+use HTMLForge\Builder\HtmlBuilder;
 use HTMLForge\Config\HTMLForgeConfig;
 use HTMLForge\HTMLForge;
-use HTMLForge\Validation\ValidationMode;
-use HTMLForge\Validation\ValidationProfile;
+use HTMLForge\Validation\Profiles\ValidationMode;
+use HTMLForge\Validation\Profiles\ValidationProfile;
 
 /*
 |--------------------------------------------------------------------------
@@ -86,10 +86,6 @@ main {
   margin: 0 auto;
 }
 
-article section {
-  margin-bottom: 2rem;
-}
-
 figure {
   margin: 0;
 }
@@ -140,7 +136,7 @@ CSS;
 
 /*
 |--------------------------------------------------------------------------
-| Header / Navigation (landmarks)
+| Header / Navigation
 |--------------------------------------------------------------------------
 */
 
@@ -176,17 +172,15 @@ $article = $html->element('article', [], [
 
     $html->element('section', ['class' => 'features'], [
         $el->h2('Features'),
-
         $html->element('ul', [], [
             $html->element('li', [], ['Standards-first HTML']),
             $html->element('li', [], ['Accessibility enforced']),
-            $html->element('li', [], ['Policy-driven validation']),
+            $html->element('li', [], ['No silent fixes']),
         ]),
     ]),
 
     $html->element('section', ['class' => 'media'], [
         $el->h2('Media Example'),
-
         $html->element('figure', [], [
             $html->element('img', [
                 'src' => '/images/example.png',
@@ -206,7 +200,7 @@ $article = $html->element('article', [], [
             'action' => '/submit',
         ], [
 
-            // implicit label (valid)
+            // implicit label — single naming source
             $html->element('label', [], [
                 'Name',
                 $html->element('input', [
@@ -215,7 +209,7 @@ $article = $html->element('article', [], [
                 ]),
             ]),
 
-            // explicit label (valid)
+            // explicit label — single naming source
             $html->element('div', [], [
                 $html->element('label', ['for' => 'email'], ['Email']),
                 $html->element('input', [
@@ -271,13 +265,11 @@ $document = $doc->document(
     ],
     options: [
 
-        // <html> attributes
         'html' => [
             'lang'  => 'en',
             'class' => 'no-js',
         ],
 
-        // <head>
         'title' => 'HTMLForge – Complete Example',
 
         'meta' => [
@@ -291,12 +283,11 @@ $document = $doc->document(
             '/assets/app.css',
         ],
 
-        // external scripts only (STRICT_HTML)
+        // STRICT_HTML: external scripts only
         'scripts' => [
             '/assets/app.js',
         ],
 
-        // <body> attributes
         'body' => [
             'class' => 'app',
             'data-theme' => 'light',

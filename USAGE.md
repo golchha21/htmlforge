@@ -1,7 +1,7 @@
 # HTMLForge – Complete Usage
 
 This document demonstrates how to generate a **fully valid, accessible HTML document**
-using HTMLForge v1.0.0.
+using HTMLForge v1.1.0.
 
 Every example in this file passes the `STRICT_HTML` validation profile.
 
@@ -14,13 +14,7 @@ If this document renders, it is correct.
 ```php
 require __DIR__ . '/../vendor/autoload.php';
 
-use HTMLForge\Builder\HtmlBuilder;
-use HTMLForge\Builder\Elements;
-use HTMLForge\Builder\DocumentBuilder;
-use HTMLForge\Config\HTMLForgeConfig;
-use HTMLForge\HTMLForge;
-use HTMLForge\Validation\ValidationMode;
-use HTMLForge\Validation\ValidationProfile;
+
 ```
 
 ---

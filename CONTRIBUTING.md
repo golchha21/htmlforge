@@ -6,7 +6,7 @@ HTMLForge is a correctness-first project.
 
 ## Maintainer
 
-- Ulhas Vardhan Golchha
+- [Ulhas Vardhan Golchha](https://github.com/golchha21)
 
 ---
 
@@ -24,7 +24,7 @@ HTMLForge is a correctness-first project.
 
 - Do not bypass validation rules
 - Do not add auto-fix behavior
-- Prefer explicit rules over heuristics
+- Prefer explicit rules to heuristics
 - Tests are mandatory for behavior changes
 - No framework-specific logic in core
 

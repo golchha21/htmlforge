@@ -66,16 +66,14 @@ final class ElementRegistry
             'style' => new ElementSpec(
                 'style',
                 [C::Metadata, C::RawText],
+                allowedAttributes: ['media'],
                 rawText: true,
-                inert: true,
-                allowedAttributes: ['media']
+                inert: true
             ),
 
             'script' => new ElementSpec(
                 'script',
                 [C::Metadata, C::RawText],
-                rawText: true,
-                inert: true,
                 allowedAttributes: [
                     'src',
                     'type',
@@ -84,7 +82,9 @@ final class ElementRegistry
                     'crossorigin',
                     'referrerpolicy',
                     'nomodule',
-                ]
+                ],
+                rawText: true,
+                inert: true
             ),
 
             'noscript' => new ElementSpec(
@@ -163,7 +163,7 @@ final class ElementRegistry
                     'loading',
                     'decoding',
                 ],
-                requiredAttributes: ['alt']
+                requiredAttributes: []
             ),
 
             'iframe' => new ElementSpec(

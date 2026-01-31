@@ -61,6 +61,8 @@ All validation happens explicitly through a validator pipeline:
 
 Validation always runs **before** rendering.
 
+Each failure maps to a **stable rule ID** with an exact element path.
+
 ---
 
 ### Policy-driven profiles
@@ -115,6 +117,19 @@ Accessibility failures are **validation errors**, not warnings.
 - No implicit wrapper elements
 - Raw-text and inert elements are isolated correctly
 - Rendering only happens if validation passes
+
+---
+
+## Validation reports
+
+HTMLForge produces **structured diagnostics**, not strings:
+
+- Stable rule IDs
+- Exact element paths (`html > body > form > input`)
+- Machine-readable JSON
+- Browser-friendly HTML reports
+
+One violation always corresponds to **one semantic rule failure**.
 
 ---
 

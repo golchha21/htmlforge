@@ -7,6 +7,38 @@ This project adheres to **Semantic Versioning**.
 
 ---
 
+## [1.1.0] - 2026-01-31
+
+### Added
+- Stable rule ID registry with no-overlap invariant
+- Element path tracking in all validation errors
+- Canonical ValidationReport schema
+- ELEMENT_REGISTRY documentation
+- RULES documentation (normative)
+
+### Changed
+- Refined validator responsibilities to prevent duplicate violations
+- Simplified and stabilized test suite
+- Aligned documentation with actual engine behavior
+
+### Fixed
+- Duplicate accessibility and attribute violations
+- Inconsistent error reporting between validators
+- Pathless validation errors
+
+### Status
+- Engine semantics stabilized
+- API and rule IDs frozen for v1.x
+
+---
+
+## [1.1.0] - 2026-01-31
+
+### Fixed
+- Add roadmap
+
+---
+
 ## [1.0.3] - 2026-01-30
 
 ### Fixed
@@ -66,5 +98,3 @@ This is the first public, stable release of HTMLForge.
 - API frozen for v1.x
 
 ---
-
-[1.0.0]: https://github.com/golchha21/htmlforge/releases/tag/v1.0.0

@@ -4,18 +4,14 @@ declare(strict_types=1);
 
 namespace HTMLForge;
 
-use Throwable;
 use HTMLForge\AST\ElementNode;
 use HTMLForge\AST\Node;
 use HTMLForge\Config\HTMLForgeConfig;
-use HTMLForge\Renderer\{HtmlRenderer, RenderMode};
 use HTMLForge\Render\RenderResult;
-use HTMLForge\Validation\{
-    ValidatorPipeline,
-    ValidationException,
-    ValidationProfile,
-    ValidatorProfileFactory
-};
+use HTMLForge\Renderer\{HtmlRenderer, RenderMode};
+use HTMLForge\Validation\Pipeline\ValidatorPipeline;
+use HTMLForge\Validation\Pipeline\ValidatorProfileFactory;
+use Throwable;
 
 final class HTMLForgeEngine
 {
@@ -27,7 +23,8 @@ final class HTMLForgeEngine
     ) {
         $this->pipeline = new ValidatorPipeline(
             validators: ValidatorProfileFactory::build($config->profile),
-            mode: $config->mode
+            mode: $config->mode,
+            profile: $config->profile
         );
 
         $this->renderer = new HtmlRenderer();
@@ -40,11 +37,8 @@ final class HTMLForgeEngine
     {
         try {
             return $this->renderInternal($document);
-        } catch (ValidationException $e) {
-            // Expected validation failure
-            return RenderResult::fromValidationException($e);
         } catch (Throwable $e) {
-            // Unexpected system error (TypeError, Error, etc.)
+            // System / programmer error (never validation)
             return RenderResult::fromFatalError($e);
         }
     }

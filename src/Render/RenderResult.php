@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace HTMLForge\Render;
 
+use HTMLForge\Validation\Exceptions\ValidationException;
+use HTMLForge\Validation\Reporting\ValidationReport;
+use HTMLForge\Validation\Reporting\Violation;
 use Throwable;
-use HTMLForge\Validation\ValidationException;
-use HTMLForge\Validation\ValidationReport;
-use HTMLForge\Validation\Violation;
 
 final readonly class RenderResult
 {

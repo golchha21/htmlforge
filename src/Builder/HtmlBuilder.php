@@ -6,9 +6,9 @@ namespace HTMLForge\Builder;
 
 use HTMLForge\AST\ElementNode;
 use HTMLForge\AST\TextNode;
-use HTMLForge\Spec\ElementRegistry;
 use HTMLForge\Spec\DeprecatedElements;
-use HTMLForge\Validation\ValidationException;
+use HTMLForge\Spec\ElementRegistry;
+use HTMLForge\Validation\Exceptions\ValidationException;
 
 final class HtmlBuilder
 {
