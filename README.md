@@ -184,8 +184,8 @@ composer require golchha21/htmlforge
 
 Requires **PHP 8.3+**.
 
-
 ---
+
 ## Changelog
 
 Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
@@ -199,6 +199,7 @@ If you discover any security related issues, please email vardhans@ulhas.net ins
 - [Ulhas Vardhan Golchha](https://github.com/golchha21) - *Initial work*
 
 See also the list of [contributors](https://github.com/golchha21/htmlforge/graphs/contributors) who participated in this project.
+
 ---
 
 ## License

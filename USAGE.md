@@ -1,7 +1,7 @@
 # HTMLForge – Complete Usage
 
 This document demonstrates how to generate a **fully valid, accessible HTML document**
-using HTMLForge v1.1.0.
+using HTMLForge v1.1.1.
 
 Every example in this file passes the `STRICT_HTML` validation profile.
 

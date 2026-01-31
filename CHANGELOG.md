@@ -7,6 +7,16 @@ This project adheres to **Semantic Versioning**.
 
 ---
 
+## [1.1.1] - 2026-01-31
+
+### Fixed
+- Changelog cleanup and version consistency
+- Corrected duplicate release entries
+- Minor README.md cleanup
+- Updated versions
+
+---
+
 ## [1.1.0] - 2026-01-31
 
 ### Added
@@ -29,13 +39,6 @@ This project adheres to **Semantic Versioning**.
 ### Status
 - Engine semantics stabilized
 - API and rule IDs frozen for v1.x
-
----
-
-## [1.1.0] - 2026-01-31
-
-### Fixed
-- Add roadmap
 
 ---
 
