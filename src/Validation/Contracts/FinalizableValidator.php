@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace HTMLForge\Validation\Contracts;
 
+use Closure;
+
 interface FinalizableValidator
 {
-    public function finalize(): void;
+    public function finalize(Closure $emit): void;
 }

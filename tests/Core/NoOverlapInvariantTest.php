@@ -9,7 +9,7 @@ use HTMLForge\Builder\DocumentBuilder;
 use HTMLForge\Validation\Pipeline\ValidatorPipeline;
 use HTMLForge\Validation\Profiles\ValidationMode;
 use HTMLForge\Validation\Profiles\ValidationProfile;
-use HTMLForge\Validation\Validators\Accessibility\AccessibleNameValidator;
+use HTMLForge\Validation\Validators\Attributes\AttributeValidator;
 use PHPUnit\Framework\TestCase;
 
 final class NoOverlapInvariantTest extends TestCase
@@ -25,12 +25,12 @@ final class NoOverlapInvariantTest extends TestCase
                     'src' => '/example.png',
                 ]),
             ],
-            options: ['title' => 'Test']
+            options: ['title' => 'Test', 'meta' => ['charset' => 'utf-8']]
         );
 
         $pipeline = new ValidatorPipeline(
             validators: [
-                new AccessibleNameValidator(),
+                new AttributeValidator(),
             ],
             mode: ValidationMode::Strict,
             profile: ValidationProfile::STRICT_HTML
@@ -42,7 +42,7 @@ final class NoOverlapInvariantTest extends TestCase
 
         $this->assertCount(1, $errors);
         $this->assertSame(
-            'accessibility:img-alt-required',
+            'attributes:required',
             $errors[0]['rule']
         );
     }

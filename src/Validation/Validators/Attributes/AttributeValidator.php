@@ -6,7 +6,7 @@ namespace HTMLForge\Validation\Validators\Attributes;
 
 use HTMLForge\AST\ElementNode;
 use HTMLForge\Validation\Contracts\AbstractTreeValidator;
-use HTMLForge\Validation\Exceptions\ValidationException;
+use HTMLForge\Validation\Reporting\Violation;
 
 final class AttributeValidator extends AbstractTreeValidator
 {
@@ -32,7 +32,7 @@ final class AttributeValidator extends AbstractTreeValidator
 
         /*
         |--------------------------------------------------------------------------
-        | Allowed attributes
+        | Attribute allowance
         |--------------------------------------------------------------------------
         */
         foreach ($node->attributes as $name => $_value) {
@@ -47,9 +47,9 @@ final class AttributeValidator extends AbstractTreeValidator
                 continue;
             }
 
-            // inline event handlers (policy-controlled)
+            // inline event handlers (policy-controlled, but detected here)
             if (str_starts_with($name, 'on')) {
-                return;
+                continue;
             }
 
             // global attributes
@@ -62,13 +62,14 @@ final class AttributeValidator extends AbstractTreeValidator
                 continue;
             }
 
-            throw new ValidationException(
+            $this->report(new Violation(
+                type: 'attributes',
                 message: "Attribute '{$name}' is not allowed on <{$tag}>.",
                 rule: 'attributes:allowed',
                 element: $tag,
                 path: $this->currentPath(),
                 spec: ['attribute' => $name]
-            );
+            ));
         }
 
         /*
@@ -78,14 +79,14 @@ final class AttributeValidator extends AbstractTreeValidator
         */
         foreach ($spec->requiredAttributes as $required) {
             if (!array_key_exists($required, $node->attributes)) {
-                throw new ValidationException(
-                    message: "Attribute '{$name}' is not allowed on <{$spec->tag}>.",
+                $this->report(new Violation(
                     type: 'attributes',
-                    rule: 'attributes:not-allowed',
-                    element: $spec->tag,
+                    message: "Attribute '{$required}' is required on <{$tag}>.",
+                    rule: 'attributes:required',
+                    element: $tag,
                     path: $this->currentPath(),
-                    spec: ['attribute' => $name]
-                );
+                    spec: ['attribute' => $required]
+                ));
             }
         }
     }

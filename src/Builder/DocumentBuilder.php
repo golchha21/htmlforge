@@ -36,10 +36,12 @@ final class DocumentBuilder
         $headChildren = [];
 
         // <meta charset>
-        $headChildren[] = $this->html->element(
-            'meta',
-            ['charset' => 'utf-8']
-        );
+        if (!empty($options['meta']['charset'])) {
+            $headChildren[] = $this->html->element(
+                'meta',
+                ['charset' => $options['meta']['charset']]
+            );
+        }
 
         // <title>
         if (!empty($options['title'])) {

@@ -25,7 +25,7 @@ final class AccessibleNameValidatorTest extends TestCase
                     $html->element('input', ['type' => 'text']),
                 ]),
             ],
-            options: ['title' => 'Test']
+            options: ['title' => 'Test', 'meta' => ['charset' => 'utf-8']]
         );
 
         $pipeline = new ValidatorPipeline(
@@ -51,7 +51,7 @@ final class AccessibleNameValidatorTest extends TestCase
                     $html->element('input', ['type' => 'email']),
                 ]),
             ],
-            options: ['title' => 'Test']
+            options: ['title' => 'Test', 'meta' => ['charset' => 'utf-8']]
         );
 
         $pipeline = new ValidatorPipeline(

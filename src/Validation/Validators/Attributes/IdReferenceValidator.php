@@ -6,7 +6,7 @@ namespace HTMLForge\Validation\Validators\Attributes;
 
 use HTMLForge\AST\ElementNode;
 use HTMLForge\Validation\Contracts\AbstractTreeValidator;
-use HTMLForge\Validation\Exceptions\ValidationException;
+use HTMLForge\Validation\Reporting\Violation;
 
 final class IdReferenceValidator extends AbstractTreeValidator
 {
@@ -20,14 +20,14 @@ final class IdReferenceValidator extends AbstractTreeValidator
             $id = $node->attributes['id'];
 
             if (isset($this->ids[$id])) {
-                throw new ValidationException(
-                    message: "Duplicate id '{$id}'.",
+                $this->report(new Violation(
                     type: 'attributes',
+                    message: "Duplicate id '{$id}'.",
                     rule: 'attributes:duplicate-id',
                     element: $node->tag,
                     path: $this->currentPath(),
                     spec: ['id' => $id]
-                );
+                ));
             }
 
             $this->ids[$id] = true;
@@ -51,14 +51,14 @@ final class IdReferenceValidator extends AbstractTreeValidator
     {
         foreach ($this->references as $ref) {
             if (!isset($this->ids[$ref['id']])) {
-                throw new ValidationException(
-                    message: "Referenced id '{$ref['id']}' does not exist.",
+                $this->report(new Violation(
                     type: 'attributes',
+                    message: "Referenced id '{$ref['id']}' does not exist.",
                     rule: 'attributes:id-reference-missing',
                     element: $ref['tag'],
                     path: $ref['path'],
                     spec: ['id' => $ref['id']]
-                );
+                ));
             }
         }
     }

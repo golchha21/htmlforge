@@ -7,6 +7,32 @@ This project adheres to **Semantic Versioning**.
 
 ---
 
+## [1.2.0] - 2026-02-01
+
+### Added
+- Deterministic multi-violation reporting per node
+- Formal 3-phase validation pipeline
+- Finalized rule ID registry
+- Structured diagnostics API for CI tooling
+- Category-grouped HTML validation reports
+
+### Fixed
+- Consecutive identical violations collapsing into one
+- Incorrect deduplication by rule only
+- Misclassification of inline event handlers
+- Validator short-circuiting during traversal
+
+### Changed
+- Validators emit violations instead of throwing
+- Security rules separated from attribute validation
+- Validation pipeline contract frozen for v1.x
+
+### Stability
+- Core validation architecture finalized
+- API frozen for all v1.x releases
+
+---
+
 ## [1.1.2] - 2026-01-31
 
 ### Added

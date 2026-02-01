@@ -6,7 +6,7 @@ namespace HTMLForge\Validation\Validators\Accessibility;
 
 use HTMLForge\AST\ElementNode;
 use HTMLForge\Validation\Contracts\AbstractTreeValidator;
-use HTMLForge\Validation\Exceptions\ValidationException;
+use HTMLForge\Validation\Reporting\Violation;
 
 final class AriaRoleValidator extends AbstractTreeValidator
 {
@@ -55,18 +55,19 @@ final class AriaRoleValidator extends AbstractTreeValidator
 
         /*
         |--------------------------------------------------------------------------
-        | Unknown role
+        | Unknown role (stop here)
         |--------------------------------------------------------------------------
         */
         if (!isset(self::ROLE_MAP[$role])) {
-            throw new ValidationException(
-                message: "Invalid ARIA role '{$role}'.",
+            $this->report(new Violation(
                 type: 'aria',
+                message: "Invalid ARIA role '{$role}'.",
                 rule: 'aria:role-invalid',
                 element: $tag,
                 path: $this->currentPath(),
                 spec: ['role' => $role]
-            );
+            ));
+            return; // ✅ REQUIRED
         }
 
         /*
@@ -78,9 +79,9 @@ final class AriaRoleValidator extends AbstractTreeValidator
             isset(self::NATIVE_ROLES[$tag]) &&
             self::NATIVE_ROLES[$tag] !== $role
         ) {
-            throw new ValidationException(
-                message: "ARIA role '{$role}' must not override native semantics of <{$tag}>.",
+            $this->report(new Violation(
                 type: 'aria',
+                message: "ARIA role '{$role}' must not override native semantics of <{$tag}>.",
                 rule: 'aria:role-override',
                 element: $tag,
                 path: $this->currentPath(),
@@ -88,7 +89,7 @@ final class AriaRoleValidator extends AbstractTreeValidator
                     'role'   => $role,
                     'native' => self::NATIVE_ROLES[$tag],
                 ]
-            );
+            ));
         }
 
         /*
@@ -97,14 +98,14 @@ final class AriaRoleValidator extends AbstractTreeValidator
         |--------------------------------------------------------------------------
         */
         if (!in_array($tag, self::ROLE_MAP[$role], true)) {
-            throw new ValidationException(
-                message: "ARIA role '{$role}' is not allowed on <{$tag}>.",
+            $this->report(new Violation(
                 type: 'aria',
+                message: "ARIA role '{$role}' is not allowed on <{$tag}>.",
                 rule: 'aria:role-disallowed',
                 element: $tag,
                 path: $this->currentPath(),
                 spec: ['role' => $role]
-            );
+            ));
         }
     }
 }

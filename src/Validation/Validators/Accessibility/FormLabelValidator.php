@@ -6,7 +6,7 @@ namespace HTMLForge\Validation\Validators\Accessibility;
 
 use HTMLForge\AST\ElementNode;
 use HTMLForge\Validation\Contracts\AbstractTreeValidator;
-use HTMLForge\Validation\Exceptions\ValidationException;
+use HTMLForge\Validation\Reporting\Violation;
 
 final class FormLabelValidator extends AbstractTreeValidator
 {
@@ -49,13 +49,13 @@ final class FormLabelValidator extends AbstractTreeValidator
             return;
         }
 
-         throw new ValidationException(
-            message: "<{$node->tag}> must be associated with a <label>.",
-             type: 'accessibility',
+         $this->report(new Violation(
+            type: 'accessibility',
+             message: "<{$node->tag}> must be associated with a <label>.",
              rule: 'accessibility:label-required',
              element: $node->tag,
              path: $this->currentPath()
-        );
+        ));
     }
 
     private function isFormControl(ElementNode $node): bool

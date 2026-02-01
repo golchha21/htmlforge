@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace HTMLForge\Validation\Pipeline;
 
 use HTMLForge\AST\Node;
+use HTMLForge\Validation\Contracts\FinalizableValidator;
 use HTMLForge\Validation\Contracts\ProfileAwareValidator;
-use HTMLForge\Validation\Exceptions\ValidationException;
 use HTMLForge\Validation\Profiles\ValidationMode;
 use HTMLForge\Validation\Profiles\ValidationProfile;
 use HTMLForge\Validation\Reporting\ValidationReport;
@@ -24,6 +24,15 @@ final class ValidatorPipeline
     {
         $report = new ValidationReport();
 
+        $emit = function (Violation $v) use ($report) {
+            $report->add($this->applySeverity($v));
+        };
+
+        /*
+        |--------------------------------------------------------------------------
+        | Phase 1: Tree validation
+        |--------------------------------------------------------------------------
+        */
         foreach ($this->validators as $validator) {
             if (
                 $validator instanceof ProfileAwareValidator &&
@@ -32,42 +41,48 @@ final class ValidatorPipeline
                 continue;
             }
 
-            try {
-                $validator->validate($node);
-            } catch (ValidationException $e) {
-                $severity = $this->resolveSeverity($e);
+            $validator->validate($node, $emit);
+        }
 
-                $report->add(
-                    new Violation(
-                        type: $e->type ?? 'error',
-                        message: $e->getMessage(),
-                        rule: $e->rule,
-                        element: $e->element,
-                        path: $e->path,
-                        spec: $e->spec,
-                        severity: $severity
-                    )
-                );
+        /*
+        |--------------------------------------------------------------------------
+        | Phase 2: Finalization
+        |--------------------------------------------------------------------------
+        */
+        foreach ($this->validators as $validator) {
+            if (
+                $validator instanceof ProfileAwareValidator &&
+                !$validator->supportsProfile($this->profile)
+            ) {
+                continue;
+            }
 
-                // ❗ NO THROW — EVER
+            if ($validator instanceof FinalizableValidator) {
+                $validator->finalize($emit);
             }
         }
 
         return $report;
     }
 
-    private function resolveSeverity(ValidationException $e): string
+    private function applySeverity(Violation $v): Violation
     {
-        // STRICT mode: everything is fatal
         if ($this->mode === ValidationMode::Strict) {
-            return 'error';
+            return $v;
         }
 
-        // Lenient mode: downgrade policy / hygiene issues
-        return match ($e->rule) {
-            'inline-event-handler' => 'warning',
-            default => 'error',
-        };
-    }
+        if ($v->rule === 'inline-event-handler') {
+            return new Violation(
+                type: $v->type,
+                message: $v->message,
+                rule: $v->rule,
+                element: $v->element,
+                path: $v->path,
+                spec: $v->spec,
+                severity: 'warning'
+            );
+        }
 
+        return $v;
+    }
 }

@@ -7,7 +7,7 @@ namespace HTMLForge\Validation\Validators\Accessibility;
 use HTMLForge\AST\ElementNode;
 use HTMLForge\AST\TextNode;
 use HTMLForge\Validation\Contracts\AbstractTreeValidator;
-use HTMLForge\Validation\Exceptions\ValidationException;
+use HTMLForge\Validation\Reporting\Violation;
 use HTMLForge\Spec\ElementCategory as C;
 
 final class AccessibleNameValidator extends AbstractTreeValidator
@@ -16,26 +16,6 @@ final class AccessibleNameValidator extends AbstractTreeValidator
     {
         $tag   = $node->tag;
         $attrs = $node->attributes;
-
-        /*
-        |--------------------------------------------------------------------------
-        | <img> requires alt
-        |--------------------------------------------------------------------------
-        */
-        if ($tag === 'img') {
-            if (!array_key_exists('alt', $attrs)) {
-                throw new ValidationException(
-                    message: "<img> elements must have an alt attribute.",
-                    type: 'accessibility',
-                    rule: 'accessibility:img-alt-required',
-                    element: 'img',
-                    path: $this->currentPath()
-                );
-            }
-
-            // alt="" is valid (decorative images)
-            return;
-        }
 
         /*
         |--------------------------------------------------------------------------
@@ -102,13 +82,18 @@ final class AccessibleNameValidator extends AbstractTreeValidator
             return;
         }
 
-        throw new ValidationException(
-            message: "Interactive element <{$tag}> must have an accessible name.",
+        /*
+        |--------------------------------------------------------------------------
+        | ❌ No accessible name
+        |--------------------------------------------------------------------------
+        */
+        $this->report(new Violation(
             type: 'accessibility',
-            rule: 'accessibility:interactive-name-required',
+            message: "Interactive element <{$tag}> must have an accessible name.",
+            rule: 'accessibility:accessible-name-required',
             element: $tag,
             path: $this->currentPath()
-        );
+        ));
     }
 
     private function hasExplicitLabel(ElementNode $node, string $id): bool

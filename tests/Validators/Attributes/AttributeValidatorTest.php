@@ -25,7 +25,7 @@ final class AttributeValidatorTest extends TestCase
                     'not-a-real-attr' => 'nope',
                 ]),
             ],
-            options: ['title' => 'Test']
+            options: ['title' => 'Test', 'meta' => ['charset' => 'utf-8']]
         );
 
         $pipeline = new ValidatorPipeline(

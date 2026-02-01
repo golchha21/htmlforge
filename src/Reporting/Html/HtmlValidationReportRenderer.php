@@ -12,8 +12,8 @@ final class HtmlValidationReportRenderer
         ValidationReport $report,
         array $options = []
     ): string {
-        $title = $options['title'] ?? 'HTML Validation Failed';
-        $groups = $report->byType();
+        $title  = $options['title'] ?? 'HTML Validation Failed';
+        $groups = $report->grouped();
 
         ob_start();
         ?>
@@ -27,8 +27,13 @@ final class HtmlValidationReportRenderer
                     --bg: #ffffff;
                     --fg: #111827;
                     --muted: #6b7280;
-                    --error: #b91c1c;
                     --border: #e5e7eb;
+
+                    --structure: #b91c1c;
+                    --attributes: #ea580c;
+                    --accessibility: #16a34a;
+                    --aria: #2563eb;
+                    --security: #6b7280;
                 }
 
                 body {
@@ -52,20 +57,25 @@ final class HtmlValidationReportRenderer
                 .violation {
                     margin: 1rem 0;
                     padding-left: 1rem;
-                    border-left: 3px solid var(--error);
+                    border-left: 3px solid var(--border);
                 }
+
+                .violation.structure     { border-left-color: var(--structure); }
+                .violation.attributes    { border-left-color: var(--attributes); }
+                .violation.accessibility { border-left-color: var(--accessibility); }
+                .violation.aria          { border-left-color: var(--aria); }
+                .violation.security        { border-left-color: var(--security); }
 
                 .rule {
                     font-family: monospace;
-                    color: var(--error);
                     font-weight: 600;
+                    margin-bottom: 0.25rem;
                 }
 
                 .meta {
                     font-family: monospace;
                     font-size: 0.875rem;
                     color: var(--muted);
-                    margin-top: 0.25rem;
                 }
 
                 .message {
@@ -81,20 +91,21 @@ final class HtmlValidationReportRenderer
             <h2><?= ucfirst($type) ?> (<?= count($violations) ?>)</h2>
 
             <?php foreach ($violations as $v): ?>
-                <div class="violation">
+                <div class="violation <?= htmlspecialchars($type) ?>">
                     <?php if ($v->rule): ?>
                         <div class="rule">✖ <?= htmlspecialchars($v->rule) ?></div>
                     <?php endif; ?>
 
-                    <div class="meta">
-                        <?php if ($v->element): ?>
-                            &lt;<?= htmlspecialchars($v->element) ?>&gt;
-                        <?php endif; ?>
-
-                        <?php if ($v->path): ?>
-                            — <?= htmlspecialchars($v->path) ?>
-                        <?php endif; ?>
-                    </div>
+                    <?php if ($v->element || $v->path): ?>
+                        <div class="meta">
+                            <?php if ($v->element): ?>
+                                &lt;<?= htmlspecialchars($v->element) ?>&gt;
+                            <?php endif; ?>
+                            <?php if ($v->path): ?>
+                                — <?= htmlspecialchars($v->path) ?>
+                            <?php endif; ?>
+                        </div>
+                    <?php endif; ?>
 
                     <div class="message">
                         <?= htmlspecialchars($v->message) ?>

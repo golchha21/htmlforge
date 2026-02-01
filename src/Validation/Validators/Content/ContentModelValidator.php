@@ -8,7 +8,7 @@ use HTMLForge\AST\ElementNode;
 use HTMLForge\AST\TextNode;
 use HTMLForge\Validation\Context\ValidationContext;
 use HTMLForge\Validation\Contracts\AbstractTreeValidator;
-use HTMLForge\Validation\Exceptions\ValidationException;
+use HTMLForge\Validation\Reporting\Violation;
 
 final class ContentModelValidator extends AbstractTreeValidator
 {
@@ -52,13 +52,13 @@ final class ContentModelValidator extends AbstractTreeValidator
             $this->context->insideInteractive &&
             !in_array($this->context->nearestContainerTag, self::LABELING_CONTAINERS, true)
         ) {
-            throw new ValidationException(
-                message: "Interactive control <{$tag}> must not be nested inside another interactive control.",
+            $this->report(new Violation(
                 type: 'structure',
+                message: "Interactive control <{$tag}> must not be nested inside another interactive control.",
                 rule: 'structure:interactive-nesting',
                 element: $tag,
                 path: $this->currentPath()
-            );
+            ));
         }
 
         /*
@@ -67,13 +67,13 @@ final class ContentModelValidator extends AbstractTreeValidator
         |--------------------------------------------------------------------------
         */
         if ($spec->void && count($node->children) > 0) {
-            throw new ValidationException(
-                message: "<{$tag}> is a void element and must not have children.",
+            $this->report(new Violation(
                 type: 'structure',
+                message: "<{$tag}> is a void element and must not have children.",
                 rule: 'structure:void-has-children',
                 element: $tag,
                 path: $this->currentPath()
-            );
+            ));
         }
 
         /*
@@ -87,13 +87,13 @@ final class ContentModelValidator extends AbstractTreeValidator
 
         if ($tag === 'html') {
             if ($htmlDepth > 0) {
-                throw new ValidationException(
-                    message: 'Nested <html> elements are not allowed.',
+                $this->report(new Violation(
                     type: 'structure',
+                    message: 'Nested <html> elements are not allowed.',
                     rule: 'structure:single-html',
                     element: 'html',
                     path: $this->currentPath()
-                );
+                ));
             }
             $htmlDepth++;
         }
@@ -101,26 +101,26 @@ final class ContentModelValidator extends AbstractTreeValidator
         if ($tag === 'head') {
             $headCount++;
             if ($headCount > 1) {
-                throw new ValidationException(
-                    message: 'Only one <head> element is allowed per document.',
+                $this->report(new Violation(
                     type: 'structure',
+                    message: 'Only one <head> element is allowed per document.',
                     rule: 'structure:single-head',
                     element: 'head',
                     path: $this->currentPath()
-                );
+                ));
             }
         }
 
         if ($tag === 'body') {
             $bodyCount++;
             if ($bodyCount > 1) {
-                throw new ValidationException(
-                    message: 'Only one <body> element is allowed per document.',
+                $this->report(new Violation(
                     type: 'structure',
+                    message: 'Only one <body> element is allowed per document.',
                     rule: 'structure:single-body',
                     element: 'body',
                     path: $this->currentPath()
-                );
+                ));
             }
         }
 

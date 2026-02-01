@@ -4,25 +4,35 @@ declare(strict_types=1);
 
 namespace HTMLForge\Validation\Contracts;
 
-use HTMLForge\AST\ElementNode;
 use HTMLForge\AST\Node;
+use HTMLForge\AST\ElementNode;
 use HTMLForge\AST\TextNode;
+use HTMLForge\Validation\Reporting\Violation;
+use Closure;
+use LogicException;
 
 abstract class AbstractTreeValidator
 {
     /**
-     * Best-effort element path (v1.1)
+     * Current traversal path
      *
      * Example: html > body > form > input
      */
-    private array $path = [];
+    protected array $path = [];
 
-    final public function validate(Node $node): void
+    /**
+     * Violation emitter provided by the pipeline
+     */
+    private ?Closure $emit = null;
+
+    final public function validate(Node $node, Closure $emit): void
     {
-        // Reset per validation run
-        $this->path = [];
+        $this->emit = $emit;
+        $this->path = []; // reset per run
 
         $this->walk($node);
+
+        $this->emit = null;
     }
 
     final protected function walk(Node $node): void
@@ -30,29 +40,34 @@ abstract class AbstractTreeValidator
         if ($node instanceof ElementNode) {
             $this->path[] = $node->tag;
 
-            try {
-                $this->validateElement($node);
+            $this->validateElement($node);
 
-                if (!$node->spec->inert && !$node->spec->rawText) {
-                    foreach ($node->children() as $child) {
-                        $this->walk($child);
-                    }
-                }
-            } finally {
+            if ($node->spec->inert || $node->spec->rawText) {
                 array_pop($this->path);
+                return;
             }
-
-            return;
         }
 
         foreach ($node->children() as $child) {
             $this->walk($child);
         }
+
+        if ($node instanceof ElementNode) {
+            array_pop($this->path);
+        }
     }
 
-    /**
-     * Current element path for validators
-     */
+    final protected function report(Violation $violation): void
+    {
+        if ($this->emit === null) {
+            throw new LogicException(
+                'Violation emitted outside of validator execution'
+            );
+        }
+
+        ($this->emit)($violation);
+    }
+
     protected function currentPath(): string
     {
         return implode(' > ', $this->path);

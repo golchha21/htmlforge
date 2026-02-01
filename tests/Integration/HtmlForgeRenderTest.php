@@ -23,7 +23,7 @@ final class HtmlForgeRenderTest extends TestCase
             bodyContent: [
                 $html->element('p', [], ['Hello world']),
             ],
-            options: ['title' => 'Test']
+            options: ['title' => 'Test', 'meta' => ['charset' => 'utf-8']]
         );
 
         $result = HTMLForge::using(

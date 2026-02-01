@@ -6,7 +6,7 @@ namespace HTMLForge\Validation\Validators\Accessibility;
 
 use HTMLForge\AST\ElementNode;
 use HTMLForge\Validation\Contracts\AbstractTreeValidator;
-use HTMLForge\Validation\Exceptions\ValidationException;
+use HTMLForge\Validation\Reporting\Violation;
 
 final class LandmarkValidator extends AbstractTreeValidator
 {
@@ -19,13 +19,13 @@ final class LandmarkValidator extends AbstractTreeValidator
         }
 
         if ($this->hasMain) {
-            throw new ValidationException(
-                message: "Multiple <{$node->tag}> landmarks are not allowed.",
+            $this->report(new Violation(
                 type: 'accessibility',
+                message: "Multiple <{$node->tag}> landmarks are not allowed.",
                 rule: 'accessibility:landmark-duplicate',
                 element: $node->tag,
                 path: $this->currentPath()
-            );
+            ));
 
         }
 

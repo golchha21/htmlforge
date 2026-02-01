@@ -6,7 +6,7 @@ namespace HTMLForge\Validation\Validators\Accessibility;
 
 use HTMLForge\AST\ElementNode;
 use HTMLForge\Validation\Contracts\AbstractTreeValidator;
-use HTMLForge\Validation\Exceptions\ValidationException;
+use HTMLForge\Validation\Reporting\Violation;
 
 final class HeadingOutlineValidator extends AbstractTreeValidator
 {
@@ -21,14 +21,14 @@ final class HeadingOutlineValidator extends AbstractTreeValidator
         $level = (int) $m[1];
 
         if ($this->lastLevel > 0 && $level > $this->lastLevel + 1) {
-            throw new ValidationException(
-                message: "Heading level skipped from h{$this->lastLevel} to h{$level}.",
+            $this->report(new Violation(
                 type: 'structure',
+                message: "Heading level skipped from h{$this->lastLevel} to h{$level}.",
                 rule: 'structure:heading-skip',
                 element: "h{$level}",
                 path: $this->currentPath(),
                 spec: ['from' => $this->lastLevel, 'to' => $level]
-            );
+            ));
 
         }
 

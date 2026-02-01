@@ -6,7 +6,7 @@ namespace HTMLForge\Validation\Validators\Attributes;
 
 use HTMLForge\AST\ElementNode;
 use HTMLForge\Validation\Contracts\AbstractTreeValidator;
-use HTMLForge\Validation\Exceptions\ValidationException;
+use HTMLForge\Validation\Reporting\Violation;
 
 final class LangAttributeValidator extends AbstractTreeValidator
 {
@@ -23,14 +23,14 @@ final class LangAttributeValidator extends AbstractTreeValidator
         }
 
         if (!preg_match('/^[a-zA-Z]{2,3}(-[a-zA-Z]{2})?$/', $lang)) {
-            throw new ValidationException(
-                message: "Invalid language code '{$lang}'.",
+            $this->report(new Violation(
                 type: 'attributes',
+                message: "Invalid language code '{$lang}'.",
                 rule: 'attributes:lang-invalid',
                 element: $node->tag,
                 path: $this->currentPath(),
                 spec: ['value' => $lang]
-            );
+            ));
         }
     }
 

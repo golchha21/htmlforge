@@ -25,7 +25,7 @@ final class StrictHtmlProfileTest extends TestCase
                     'onclick' => 'alert(1)',
                 ], ['Click']),
             ],
-            options: ['title' => 'Test']
+            options: ['title' => 'Test', 'meta' => ['charset' => 'utf-8']]
         );
 
         $result = HTMLForge::using(

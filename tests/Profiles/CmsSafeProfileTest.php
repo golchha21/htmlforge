@@ -23,7 +23,7 @@ final class CmsSafeProfileTest extends TestCase
             bodyContent: [
                 $html->element('button', ['onclick' => 'doThing()'], ['Click']),
             ],
-            options: ['title' => 'Test']
+            options: ['title' => 'Test', 'meta' => ['charset' => 'utf-8']]
         );
 
         $pipeline = new ValidatorPipeline(

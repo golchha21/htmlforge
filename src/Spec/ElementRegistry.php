@@ -163,7 +163,7 @@ final class ElementRegistry
                     'loading',
                     'decoding',
                 ],
-                requiredAttributes: []
+                requiredAttributes: ['src', 'alt']
             ),
 
             'iframe' => new ElementSpec(

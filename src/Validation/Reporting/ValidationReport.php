@@ -10,17 +10,12 @@ final class ValidationReport
 {
     /** @var Violation[] */
     private array $violations = [];
-    private array $seen = [];
 
     public function add(Violation $v): void
     {
-        $key = "{$v->rule}|{$v->path}";
-
-        if (isset($this->seen[$key])) {
-            return;
-        }
-
-        $this->seen[$key] = true;
+        // IMPORTANT:
+        // Do NOT deduplicate.
+        // Multiple AST nodes may violate the same rule independently.
         $this->violations[] = $v;
     }
 
@@ -54,42 +49,6 @@ final class ValidationReport
         );
     }
 
-    /** @return Violation[] */
-    public function warnings(): array
-    {
-        return array_values(
-            array_filter(
-                $this->violations,
-                fn (Violation $v) => $v->severity === 'warning'
-            )
-        );
-    }
-
-    /**
-     * @return Violation
-     */
-    public function byType(): array
-    {
-        $grouped = [];
-
-        foreach ($this->violations as $violation) {
-            $grouped[$violation->type][] = $violation;
-        }
-
-        return $grouped;
-    }
-
-    // NEW — v1.1 internal API
-    public function diagnostics(): array
-    {
-        return array_map(
-            fn (Violation $v) => $v->toArray() + [
-                    'severity' => $v->severity,
-                ],
-            $this->violations
-        );
-    }
-
     public function toArray(): array
     {
         return [
@@ -119,11 +78,16 @@ final class ValidationReport
         );
     }
 
-    public function serialize(): array
+    public function grouped(): array
     {
-        return [
-            'valid'  => $this->isValid(),
-            'errors' => $this->errors(),
-        ];
+        $grouped = [];
+
+        foreach ($this->violations as $violation) {
+            $grouped[$violation->type][] = $violation;
+        }
+
+        ksort($grouped);
+
+        return $grouped;
     }
 }

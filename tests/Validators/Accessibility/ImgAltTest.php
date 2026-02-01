@@ -9,7 +9,7 @@ use HTMLForge\Builder\DocumentBuilder;
 use HTMLForge\Validation\Pipeline\ValidatorPipeline;
 use HTMLForge\Validation\Profiles\ValidationMode;
 use HTMLForge\Validation\Profiles\ValidationProfile;
-use HTMLForge\Validation\Validators\Accessibility\AccessibleNameValidator;
+use HTMLForge\Validation\Validators\Attributes\AttributeValidator;
 use PHPUnit\Framework\TestCase;
 
 final class ImgAltTest extends TestCase
@@ -23,11 +23,11 @@ final class ImgAltTest extends TestCase
             bodyContent: [
                 $html->element('img', ['src' => '/test.png']),
             ],
-            options: ['title' => 'Test']
+            options: ['title' => 'Test', 'meta' => ['charset' => 'utf-8']]
         );
 
         $pipeline = new ValidatorPipeline(
-            validators: [new AccessibleNameValidator()],
+            validators: [new AttributeValidator()],
             mode: ValidationMode::Strict,
             profile: ValidationProfile::STRICT_HTML
         );
@@ -36,6 +36,6 @@ final class ImgAltTest extends TestCase
         $errors = $report->toArray()['errors'];
 
         $this->assertCount(1, $errors);
-        $this->assertSame('accessibility:img-alt-required', $errors[0]['rule']);
+        $this->assertSame('attributes:required', $errors[0]['rule']);
     }
 }

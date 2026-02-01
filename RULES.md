@@ -102,9 +102,53 @@ Documents must contain exactly one `<html>`, `<head>`, and `<body>` element.
 
 ---
 
+### structure:document-title-required
+
+**Category:** structure  
+**Applies to:** `html > head`  
+**Severity:** error
+
+**Description:**  
+A valid HTML document must contain exactly one `<title>` element inside `<head>`.
+
+**Rationale:**  
+The `<title>` element is required by the HTML specification and is essential for:
+- browser UI
+- history entries
+- accessibility technologies
+
+HTMLForge does not auto-insert missing titles.
+
+**Violation message:**  
+`Document must contain a <title> element.`
+
+---
+
+### structure:meta-charset-required
+
+**Category:** structure  
+**Applies to:** `html > head`  
+**Severity:** error
+
+**Description:**  
+A valid HTML document must declare a character encoding using  
+`<meta charset="utf-8">`.
+
+**Rationale:**  
+Missing charset declarations can cause undefined parsing behavior and
+content corruption. The HTML specification strongly requires early charset
+declaration.
+
+HTMLForge enforces explicit encoding declaration.
+
+**Violation message:**  
+`Document must declare a character encoding using <meta charset>.`
+
+---
+
 ## InlineEventHandlerValidator
 
-### policy:inline-event-handler
+### security:inline-event-handler
 
 **Severity:**
 - error (STRICT_HTML)

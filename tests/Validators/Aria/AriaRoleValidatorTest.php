@@ -23,7 +23,7 @@ final class AriaRoleValidatorTest extends TestCase
             bodyContent: [
                 $html->element('div', ['role' => 'banana']),
             ],
-            options: ['title' => 'Test']
+            options: ['title' => 'Test', 'meta' => ['charset' => 'utf-8']]
         );
 
         $pipeline = new ValidatorPipeline(
