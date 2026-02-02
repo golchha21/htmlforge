@@ -9,11 +9,12 @@
 
 **HTMLForge** is a standards-first HTML compiler for PHP.
 
-It generates **W3C-compliant, accessibility-validated HTML** by compiling an explicit Abstract Syntax Tree (AST) through a deterministic validation pipeline.
+It generates **W3C-compliant, accessibility-validated HTML** by compiling an explicit
+**Abstract Syntax Tree (AST)** through a deterministic validation pipeline.
 
 HTMLForge does not guess, auto-fix, or silently tolerate invalid markup.
 
-If HTML renders, it is structurally correct and policy-compliant.
+If HTML renders, it is **structurally correct and policy-compliant**.
 
 ---
 
@@ -47,9 +48,9 @@ HTMLForge builds an immutable **Abstract Syntax Tree (AST)**.
 
 ---
 
-### Deterministic validation
+### Deterministic validation (v1.2)
 
-All validation happens explicitly through a validator pipeline:
+All validation happens explicitly through a **multi-phase validator pipeline**:
 
 - Document structure
 - Content model rules
@@ -58,10 +59,20 @@ All validation happens explicitly through a validator pipeline:
 - Accessibility (WCAG-aware)
 - ARIA semantics
 - Document metadata
+- Policy & security rules
 
 Validation always runs **before** rendering.
 
-Each failure maps to a **stable rule ID** with an exact element path.
+In **v1.2**, validators **emit violations instead of throwing**, which guarantees:
+
+- All violations are collected
+- Multiple failures on multiple nodes are all reported
+- No early exits or hidden errors
+
+Each violation maps to:
+- a **stable rule ID**
+- a **single semantic failure**
+- an **exact element path**
 
 ---
 
@@ -79,7 +90,7 @@ Profiles define *what is enforced*, not *how HTML is written*.
 
 No conditionals.  
 No runtime switches.  
-Profiles are declarative.
+Profiles are declarative and explicit.
 
 ---
 
@@ -92,7 +103,7 @@ HTMLForge never:
 - rewrites your structure
 - relies on browser error recovery
 
-If something is wrong, you get a validation report — not broken HTML.
+If something is wrong, you get a **complete validation report** — not broken HTML.
 
 ---
 
@@ -120,16 +131,30 @@ Accessibility failures are **validation errors**, not warnings.
 
 ---
 
-## Validation reports
+## Validation reports (v1.2)
 
 HTMLForge produces **structured diagnostics**, not strings:
 
-- Stable rule IDs
+- Stable rule IDs (e.g. `accessibility:img-alt-required`)
 - Exact element paths (`html > body > form > input`)
-- Machine-readable JSON
-- Browser-friendly HTML reports
+- Multiple violations are **never deduplicated**
+- Machine-readable JSON output
+- Browser-friendly grouped HTML reports
 
 One violation always corresponds to **one semantic rule failure**.
+
+---
+
+### Security and policy enforcement
+
+HTMLForge enforces strict security-related HTML policies:
+
+- Inline JavaScript event handlers (`onclick`, `onload`, etc.)
+- Profile-aware severity:
+  - error in `STRICT_HTML`
+  - warning in CMS-oriented profiles
+
+These rules are enforced at validation time, not runtime.
 
 ---
 
@@ -165,6 +190,19 @@ If something is not documented, it is either unstable or out of scope.
 
 - **[CMS-Safe Pipeline](docs/examples/cms-safe-pipeline.md)**  
   Validating and rendering untrusted, user-generated content.
+
+---
+
+### Document encoding enforcement
+
+HTMLForge requires an explicit character encoding declaration:
+
+- `<meta charset="utf-8">` is mandatory
+- Missing charset is a validation error
+- HTMLForge does not auto-insert encoding metadata
+
+This ensures deterministic parsing behavior and avoids
+browser-dependent encoding assumptions.
 
 ---
 

@@ -1,7 +1,12 @@
-# HTMLForge Rule Registry (v1.1)
+# HTMLForge Rule Registry (v1.2)
 
 This document defines all validation rules enforced by HTMLForge.
 Rule IDs are stable, unique, and non-overlapping.
+
+Note:  
+The `structure:*` rule category includes document-level invariants,
+including required metadata elements such as `<title>` and `<meta charset>`.
+
 
 ---
 

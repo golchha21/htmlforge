@@ -7,65 +7,26 @@ The core engine is considered stable as of v1.1.x.
 
 ---
 
-## ✅ Completed (v1.1.x)
+## ✅ Completed (v1.2.x)
 
-The following milestones are complete and considered stable for the v1.x series.
+### Diagnostics & Rule System
+- Stable rule registry with non-overlapping IDs
+- One semantic failure → one violation invariant
+- Multiple violations across multiple nodes supported
+- Profile-aware severity handling
+- Explicit rule ownership per validator
 
-### Core Architecture
-- AST-first design with no raw HTML rendering
-- Deterministic pipeline: AST → Validation → RenderResult
-- Explicit separation of validation and rendering
+### Reporting
+- Canonical ValidationReport schema
+- JSON and HTML report parity
+- Grouped, human-readable browser output
+- Machine-readable diagnostics for tooling
 
-### Validation System
-- Unified validator traversal model
-- Clear validator responsibility boundaries
-- No overlapping or duplicate violations
-- Proper handling of inert and raw-text content
-- Exact element path tracking (`html > body > form > input`)
-
-### Diagnostics Model
-- Canonical `Violation` structure with:
-  - stable rule identifiers
-  - element paths
-  - severity
-  - specification references
-- Canonical `ValidationReport`
-  - non-throwing behavior
-  - structured data output
-  - JSON serialization
-  - HTML rendering
-- Browser and PHPUnit parity
-
-### Profiles
-- `WCAG_A`
-- `WCAG_AA`
-- `STRICT_HTML`
-- `CMS_SAFE`
-
-Profiles are deterministic, regression-tested, and stable for v1.x.
-
-### Project Hygiene
-- Documentation structure finalized
-- README, CONTRIBUTING, CHANGELOG, ROADMAP aligned
-- PHP-backed documentation examples added
-- Release and tagging policy defined
+v1.2.x finalizes the validation and diagnostics model.
 
 ---
 
-## 🟢 Current Status
-
-HTMLForge is **feature-complete at the core engine level**.
-
-The project is now transitioning from:
-- internal correctness work  
-  to
-- external-facing usability and ecosystem tooling
-
-No further core validation logic is planned for v1.x unless required for correctness.
-
----
-
-## 🔜 Planned (v1.2.x — choose one primary focus)
+## 🔜 Planned (v1.3.x — choose one primary focus)
 
 Only one of the following will be pursued at a time.
 
