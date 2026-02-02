@@ -7,6 +7,11 @@ This project adheres to **Semantic Versioning**.
 
 ---
 
+## [1.2.1] - 2026-02-02
+
+--- Updated README, RULES, ROADMAP, and ELEMENT REGISTRY
+
+
 ## [1.2.0] - 2026-02-01
 
 ### Added
